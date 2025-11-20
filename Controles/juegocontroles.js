@@ -3,6 +3,15 @@ const juego = require("../models/juego");
 
 const Juego = require(models/juego); // Importa el modelo Juego de Mongoose
 
+// Casos de éxito:
+// 201 = Se creó correctamente (POST - Crear)
+// 200 = Operación exitosa (GET / PUT / DELETE)
+
+// Casos de error:
+// 400 = Datos inválidos enviados por el cliente
+// 404 = Recurso no encontrado
+// 500 = Error interno del servidor
+
 // C - Crear JUEGO
 exports.crearJuego = async (req, res) => {
   try {
