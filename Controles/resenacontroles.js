@@ -42,3 +42,24 @@ exports.obtenerResenaPorId = async (req, res) => {
         res.status(500).json({ error: 'Error al buscar la reseña' }); // Error del servidor
     }
 };
+
+// U - Actualizar reseña
+exports.actualizarResena = async (req, res) => {
+    try {
+        const resena = await Resena.findByIdAndUpdate(req.params.id, req.body, { 
+            new: true, // Retorna la reseña actualizada
+            runValidators: true // Valida los campos según el modelo
+        });
+        
+        if (!resena) {
+            return res.status(404).json({ msg: 'Reseña no encontrada para actualizar' }); // Si no existe
+        }
+        
+        res.status(200).json(resena); // Retorna la reseña actualizada con código 200
+    } catch (error) {
+        res.status(400).json({ // Error en los datos enviados
+            error: 'Error al actualizar la reseña.', 
+            details: error.message
+        });
+    }
+};
