@@ -13,3 +13,17 @@ exports.crearResena = async (req, res) => {
         });
     }
 };
+
+// R - Obtener todas las reseñas
+exports.obtenerResenas = async (req, res) => {
+    try {
+        // Permite filtrar reseñas por el ID del juego si se envía en la query
+        const filtro = req.query.juegoId ? { juego: req.query.juegoId } : {};
+        
+        // Busca reseñas y trae el nombre del juego relacionado usando populate
+        const resenas = await Resena.find(filtro).populate('juego', 'nombre'); 
+        res.status(200).json(resenas); // Retorna las reseñas con código 200
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener las reseñas' }); // Error del servidor
+    }
+};
