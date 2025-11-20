@@ -27,3 +27,18 @@ exports.obtenerResenas = async (req, res) => {
         res.status(500).json({ error: 'Error al obtener las reseñas' }); // Error del servidor
     }
 };
+
+// R - Obtener reseña por ID
+exports.obtenerResenaPorId = async (req, res) => {
+    try {
+        const resena = await Resena.findById(req.params.id).populate('juego', 'nombre'); // Busca reseña por ID y trae el nombre del juego
+        
+        if (!resena) {
+            return res.status(404).json({ msg: 'Reseña no encontrada' }); // Si no existe, retorna 404
+        }
+        
+        res.status(200).json(resena); // Retorna la reseña con código 200
+    } catch (error) {
+        res.status(500).json({ error: 'Error al buscar la reseña' }); // Error del servidor
+    }
+};
